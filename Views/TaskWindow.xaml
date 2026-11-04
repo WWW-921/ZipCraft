@@ -1,0 +1,59 @@
+<Window x:Class="SimpleCompress.Views.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="小压匠" Width="440" Height="300"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="White">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" x:Name="ResultIconPanel" Visibility="Collapsed">
+            <Border x:Name="ResultIcon" Width="48" Height="48" CornerRadius="24"
+                    Background="#e1f3eb" Margin="0,0,0,12">
+                <TextBlock x:Name="ResultGlyph" Text="✓" FontSize="26"
+                           Foreground="#217451" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" x:Name="TitleText" FontSize="18" FontWeight="SemiBold"
+                   Text="正在处理文件" Margin="0,0,0,6"/>
+        <TextBlock Grid.Row="2" x:Name="SubText" Style="{StaticResource Hint}"
+                   Text="" Margin="0,0,0,14"/>
+
+        <StackPanel Grid.Row="3">
+            <ProgressBar x:Name="Bar" Height="8" Minimum="0" Maximum="100"
+                         Foreground="{StaticResource Blue}" IsIndeterminate="False"/>
+            <DockPanel Margin="0,8,0,0">
+                <TextBlock x:Name="PercentText" DockPanel.Dock="Right" Text="0%"
+                           FontSize="12" Foreground="{StaticResource Muted}"/>
+                <TextBlock x:Name="FileText" Text="准备中…" FontSize="12"
+                           Foreground="{StaticResource Muted}" TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
+        </StackPanel>
+
+        <Expander Grid.Row="4" x:Name="Details" Header="查看详情" Margin="0,14,0,0"
+                  FontSize="12" Visibility="Collapsed">
+            <ScrollViewer MaxHeight="120" Margin="0,6,0,0">
+                <TextBox x:Name="LogBox" IsReadOnly="True" BorderThickness="0"
+                         FontFamily="Consolas" FontSize="11" TextWrapping="Wrap"
+                         Background="#f7f9fc"/>
+            </ScrollViewer>
+        </Expander>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button x:Name="OpenFolderBtn" Content="打开文件夹" Style="{StaticResource PlainButton}"
+                    Visibility="Collapsed" Margin="0,0,10,0" Click="OpenFolder_Click"/>
+            <Button x:Name="CancelBtn" Content="取消" Style="{StaticResource PlainButton}"
+                    Margin="0,0,10,0" Click="Cancel_Click"/>
+            <Button x:Name="PrimaryBtn" Content="开始" Style="{StaticResource PrimaryButton}"
+                    MinWidth="96" Click="Primary_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

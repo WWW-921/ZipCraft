@@ -1,0 +1,116 @@
+<Window x:Class="SimpleCompress.Views.CompressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="压缩文件" Width="560" SizeToContent="Manual" Height="560"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="White">
+    <Grid Margin="28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="压缩文件" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,16"/>
+
+        <!-- 输入项目摘要 -->
+        <Border Grid.Row="1" Background="#f4f7fb" BorderBrush="#e5eaf2" BorderThickness="1"
+                CornerRadius="6" Padding="14,11" Margin="0,0,0,16">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="重新选择" Style="{StaticResource LinkButton}"
+                        Click="Reselect_Click"/>
+                <StackPanel>
+                    <TextBlock x:Name="SummaryName" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="SummaryCount" Style="{StaticResource Hint}" Margin="0,4,0,0"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- 名称 + 格式 -->
+        <Grid Grid.Row="2" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Style="{StaticResource FieldLabel}" Text="压缩包名称"/>
+                <TextBox x:Name="NameBox"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Style="{StaticResource FieldLabel}" Text="格式"/>
+                <ComboBox x:Name="FormatBox" SelectionChanged="Format_Changed">
+                    <ComboBoxItem Content="ZIP（通用）" Tag="zip" IsSelected="True"/>
+                    <ComboBoxItem Content="7Z（更小体积）" Tag="7z"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!-- 保存位置 -->
+        <StackPanel Grid.Row="3" Margin="0,14,0,0">
+            <TextBlock Style="{StaticResource FieldLabel}" Text="保存到"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="更改位置" Style="{StaticResource PlainButton}"
+                        Margin="8,0,0,0" Click="BrowseDest_Click"/>
+                <TextBox x:Name="DestBox"/>
+            </DockPanel>
+        </StackPanel>
+
+        <!-- 密码 -->
+        <StackPanel Grid.Row="4" Margin="0,16,0,0">
+            <CheckBox x:Name="PwToggle" Content="设置密码" Checked="Pw_Toggle" Unchecked="Pw_Toggle"/>
+            <StackPanel x:Name="PwArea" Visibility="Collapsed" Margin="24,10,0,0" MaxWidth="360" HorizontalAlignment="Left">
+                <TextBlock Style="{StaticResource FieldLabel}" Text="密码"/>
+                <Grid>
+                    <PasswordBox x:Name="PwBox"/>
+                    <TextBox x:Name="PwText" Visibility="Collapsed"/>
+                </Grid>
+                <CheckBox x:Name="PwShow" Content="显示密码" Margin="0,8,0,0" Checked="PwShow_Toggle" Unchecked="PwShow_Toggle"/>
+                <CheckBox x:Name="EncHeader" Content="加密文件头（仅 7Z，隐藏文件名）" Margin="0,8,0,0"
+                          ToolTip="加密头部后，未输入密码无法查看压缩包内文件名。仅 7Z 格式支持。"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- 高级 -->
+        <Expander Grid.Row="5" Header="高级选项" Margin="0,18,0,0" FontSize="13">
+            <Grid Margin="0,12,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="压缩等级"/>
+                    <ComboBox x:Name="LevelBox">
+                        <ComboBoxItem Content="快速" Tag="fast"/>
+                        <ComboBoxItem Content="标准（推荐）" Tag="normal" IsSelected="True"/>
+                        <ComboBoxItem Content="最大压缩" Tag="max"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="分卷大小"/>
+                    <ComboBox x:Name="VolumeBox">
+                        <ComboBoxItem Content="不分卷" Tag="none" IsSelected="True"/>
+                        <ComboBoxItem Content="100 MB" Tag="100m"/>
+                        <ComboBoxItem Content="700 MB" Tag="700m"/>
+                        <ComboBoxItem Content="1 GB" Tag="1g"/>
+                        <ComboBoxItem Content="4.7 GB" Tag="4700m"/>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Expander>
+
+        <!-- 底部 -->
+        <DockPanel Grid.Row="7" Margin="0,10,0,0">
+            <Button DockPanel.Dock="Right" Content="开始压缩" Style="{StaticResource PrimaryButton}"
+                    MinWidth="140" Click="Start_Click"/>
+            <TextBlock x:Name="FooterHint" VerticalAlignment="Center" Style="{StaticResource Hint}"
+                       Text="ZIP 适合日常分享，7Z 通常体积更小。"/>
+        </DockPanel>
+    </Grid>
+</Window>

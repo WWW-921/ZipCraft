@@ -1,0 +1,81 @@
+<Window x:Class="SimpleCompress.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="设置" Width="560" Height="500"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="White">
+    <Grid Margin="28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="设置" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,18"/>
+
+        <GroupBox Grid.Row="1" Header="右键菜单" Padding="12,8" Margin="0,0,0,16"
+                  BorderBrush="{StaticResource Line}">
+            <StackPanel>
+                <CheckBox x:Name="ShellToggle" Content="在文件右键菜单显示压缩和解压" Margin="0,4,0,6"/>
+                <TextBlock Style="{StaticResource Hint}"
+                           Text="启用后写入当前用户注册表（免管理员）。Windows 11 中命令位于“显示更多选项”经典菜单。移动程序位置后请关闭再重新启用以更新路径。"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="默认行为" Padding="12,8" Margin="0,0,0,16"
+                  BorderBrush="{StaticResource Line}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="默认压缩格式"/>
+                    <ComboBox x:Name="DefaultFormat">
+                        <ComboBoxItem Content="ZIP" Tag="zip" IsSelected="True"/>
+                        <ComboBoxItem Content="7Z" Tag="7z"/>
+                    </ComboBox>
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="默认压缩等级" Margin="0,14,0,6"/>
+                    <ComboBox x:Name="DefaultLevel">
+                        <ComboBoxItem Content="快速" Tag="fast"/>
+                        <ComboBoxItem Content="标准" Tag="normal" IsSelected="True"/>
+                        <ComboBoxItem Content="最大" Tag="max"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Style="{StaticResource FieldLabel}" Text="解压同名文件时"/>
+                    <ComboBox x:Name="DefaultConflict">
+                        <ComboBoxItem Content="每次询问" Tag="ask" IsSelected="True"/>
+                        <ComboBoxItem Content="保留两份" Tag="rename"/>
+                        <ComboBoxItem Content="跳过" Tag="skip"/>
+                        <ComboBoxItem Content="替换" Tag="overwrite"/>
+                    </ComboBox>
+                    <CheckBox x:Name="ExtractNamed" Content="解压到同名文件夹" Margin="0,14,0,0"/>
+                    <CheckBox x:Name="OpenAfterExtract" Content="解压完成后打开文件夹" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="3" Header="引擎与依赖" Padding="12,8" VerticalAlignment="Top"
+                  BorderBrush="{StaticResource Line}">
+            <StackPanel>
+                <TextBlock Style="{StaticResource FieldLabel}" Text="7z.exe 路径（留空自动发现）"/>
+                <DockPanel>
+                    <Button DockPanel.Dock="Right" Content="浏览…" Style="{StaticResource PlainButton}"
+                            Margin="8,0,0,0" Click="BrowseEngine_Click"/>
+                    <TextBox x:Name="EnginePathBox"/>
+                </DockPanel>
+                <TextBlock x:Name="EngineState" Style="{StaticResource Hint}" Margin="0,8,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="取消" Style="{StaticResource PlainButton}" MinWidth="80"
+                    Margin="0,0,10,0" Click="Cancel_Click"/>
+            <Button Content="保存" Style="{StaticResource PrimaryButton}" MinWidth="96"
+                    Click="Save_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
