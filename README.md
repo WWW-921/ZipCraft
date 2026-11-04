@@ -74,6 +74,7 @@ dotnet publish -c Release --self-contained false `
 - **发现优先级**：用户配置路径 → 随包 `tools\7z` → 已知 PeaZip 目录 `D:\Tools\PeaZipPortable\...` → 系统 7-Zip（Program Files / 注册表）。**不写死单一路径**，可在设置覆盖。
 - “更多功能 → PeaZip 完整界面”通过 `EngineLocator.LocatePeaZip` 定位 `peazip.exe`（配置或已知路径），缺失时给中文提示。
 - **许可**：
+  - 本项目源码：MIT（见仓库根目录 `LICENSE`）。
   - 7-Zip：author Igor Pavlov， LICENSE 见 7-Zip 官方（ LGPL 兼容、含 unRAR 内容遵循 unRAR license —— 不得用于再实现 RAR 压缩算法，仅解压）。
   - PeaZip / 便携分发：官方允许个人、商业使用；再分发需遵循其许可。参考 https://peazip.github.io/peazip-misc.html
   - 本项目随包复制的是 PeaZip 便携版内的 7-Zip 二进制，用途为“调用成熟引擎”，未修改引擎本体。
